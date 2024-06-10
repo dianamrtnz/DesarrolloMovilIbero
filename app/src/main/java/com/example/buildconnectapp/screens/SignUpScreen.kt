@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.buildconnectapp.model.Usuario
-import com.example.buildconnectapp.navigation.AppScreens
 import com.google.firebase.database.FirebaseDatabase
 import java.util.UUID
 

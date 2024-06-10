@@ -1,7 +1,6 @@
 package com.example.buildconnectapp.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +19,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.getValue
@@ -40,12 +38,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.buildconnectapp.model.Usuario
-import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import java.util.UUID
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -116,7 +109,7 @@ fun UserFormScreen(navController: NavController, userId: String) {
                     "contraseña" to user.contraseña,
                     "numero_vivienda" to user.numero_vivienda
                 )
-                if (user!= null && !user.nombre.isNullOrEmpty() && !user.correo_electronico.isNullOrEmpty() && !user.contraseña.isNullOrEmpty()) {
+                if (user.nombre.isNotEmpty() && user.correo_electronico.isNotEmpty() && user.contraseña.isNotEmpty()) {
                     if (isNewUser) {
                         userRef.child(user.id).setValue(userMap)
                     } else {

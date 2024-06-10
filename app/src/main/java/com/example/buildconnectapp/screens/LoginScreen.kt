@@ -36,7 +36,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.buildconnectapp.helper.PreferencesHelper
 import com.example.buildconnectapp.model.Usuario
 import com.example.buildconnectapp.navigation.AppScreens
-import com.example.buildconnectapp.ui.theme.BuildConnectAppTheme
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -156,15 +155,6 @@ fun LoginScreen(navController : NavController) {
                         }
                     })
                 },
-                /*onClick = {
-                    if (username == "user" && password == "123456") {
-                        isLoggedIn = true
-                        errorMessage = ""
-                        navController.navigate(route = AppScreens.MenuScreen.route)
-                    } else {
-                        errorMessage = "Usuario o contraseña incorrectos"
-                    }
-                },*/
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF006557),

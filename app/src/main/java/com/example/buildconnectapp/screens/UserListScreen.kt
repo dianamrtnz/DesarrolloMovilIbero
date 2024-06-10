@@ -48,8 +48,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.getValue
-import com.google.firebase.firestore.FirebaseFirestore
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,7 +93,7 @@ fun UserListScreen(navController: NavController) {
                 ),
                 title = {
                     Text(
-                        "User List",
+                        "Listado de Usuarios",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
