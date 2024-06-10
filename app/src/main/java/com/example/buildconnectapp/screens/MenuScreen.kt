@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.MailOutline
@@ -37,11 +38,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.buildconnectapp.helper.PreferencesHelper
 import com.example.buildconnectapp.navigation.AppScreens
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -49,6 +53,8 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuScreen(navController : NavController) {
+    val context = LocalContext.current
+    val preferencesHelper = PreferencesHelper(context)
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -66,7 +72,10 @@ fun MenuScreen(navController : NavController) {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = {
+                        preferencesHelper.clearUserName()
+                        navController.popBackStack()
+                    }) {
                         Icon(
                             tint = Color.Black,
                             imageVector = Icons.Filled.ArrowBack,
@@ -94,6 +103,10 @@ fun MenuScreen(navController : NavController) {
 
 @Composable
 fun MenuBodyContent(navController : NavController){
+    val context = LocalContext.current
+    val preferencesHelper = PreferencesHelper(context)
+    val userName = preferencesHelper.getUserName()
+
     Column(
         modifier = Modifier.fillMaxSize().padding(0.dp).background(Color(0xFF8BBB96)),
         verticalArrangement = Arrangement.Top,
@@ -106,7 +119,7 @@ fun MenuBodyContent(navController : NavController){
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = "Bienvenido Usuario",
+                text = "Bienvenido Usuario : $userName",
                 modifier = Modifier.padding(16.dp),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge,
@@ -170,14 +183,33 @@ fun MenuBodyContent(navController : NavController){
                 Icon(Icons.Outlined.MailOutline, contentDescription = "Foro Social")
             }
         }
+        Spacer(modifier = Modifier.height(25.dp))
+        Button(
+            onClick = {
+                navController.navigate(route = AppScreens.UserListScreen.route)
+            },
+            shape = RoundedCornerShape(5.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 50.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF006557),
+                disabledContainerColor = Color(0xFF006557),
+                contentColor = Color.White
+            )
+        ) {
+            Row(modifier = Modifier.padding(start = 16.dp)) {
+                Text("Gestion de Usuarios")
+                Spacer(modifier = Modifier.width(10.dp))
+                Icon(Icons.Outlined.AccountCircle, contentDescription = "Gestion de Usuarios")
+            }
+        }
 
     }
 }
 
-/*
+
 @Preview(showBackground = true)
 @Composable
 fun MenuPreview() {
-    MenuScreen()
+    val navController = rememberNavController()
+    MenuScreen(navController)
 }
-*/

@@ -30,17 +30,35 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.buildconnectapp.model.Usuario
 import com.example.buildconnectapp.navigation.AppScreens
+import com.google.firebase.database.FirebaseDatabase
+import java.util.UUID
 
 @Composable
-fun SignUpScreen(navController : NavController) {
+fun SignUpScreen(navController: NavController) {
+    val database = FirebaseDatabase.getInstance()
+    val userRef = database.getReference("usuario")
     var username by remember { mutableStateOf("") }
-    var numberDoc by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     var numberHouse by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
+
+    var user by remember {
+        mutableStateOf(
+            Usuario(
+                UUID.randomUUID().toString(),
+                "",
+                "",
+                "",
+                "",
+                ""
+            )
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -67,27 +85,7 @@ fun SignUpScreen(navController : NavController) {
         TextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("Usuario") },
-            singleLine = true,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color(0xFFB4E1BE),
-                focusedContainerColor = Color(0xFFB4E1BE),
-                unfocusedLabelColor = Color.Gray,
-                focusedLabelColor = Color.Gray,
-                cursorColor = Color.Black,
-                focusedTextColor = Color.Black,
-                unfocusedTextColor = Color.Black,
-                focusedIndicatorColor = Color(0xFFD0EAD6)
-            )
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        TextField(
-            value = numberDoc,
-            onValueChange = { numberDoc = it },
-            label = { Text("Numero de documento") },
+            label = { Text("Nombre") },
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
@@ -190,6 +188,17 @@ fun SignUpScreen(navController : NavController) {
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
+                val userMap = mapOf(
+                    "id" to user.id,
+                    "nombre" to username,
+                    "correo_electronico" to email,
+                    "telefono" to phoneNumber,
+                    "contraseña" to password,
+                    "numero_vivienda" to numberHouse
+                )
+                if(!username.isNullOrEmpty() && !email.isNullOrEmpty() && !password.isNullOrEmpty()){
+                    userRef.child(user.id).setValue(userMap)
+                }
                 navController.popBackStack()
             },
             modifier = Modifier
@@ -211,10 +220,10 @@ fun SignUpScreen(navController : NavController) {
 
 }
 
-/*
+
 @Preview(showBackground = true)
 @Composable
 fun SignUpPreview() {
-    SignUpScreen()
+    val navController = rememberNavController()
+    SignUpScreen(navController)
 }
- */

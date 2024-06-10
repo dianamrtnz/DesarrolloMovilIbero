@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "108072483218",
+    "project_id": "proyectoibero2024-938b7",
+    "storage_bucket": "proyectoibero2024-938b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108072483218:android:0d1176ad67722fb6f4a94b",
+        "android_client_info": {
+          "package_name": "com.example.buildconnectapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_O17GUm8OxTFslVnJNW8togiwUY7YO08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

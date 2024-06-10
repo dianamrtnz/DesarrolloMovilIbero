@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.buildconnectapp.navigation.AppScreens
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -172,10 +173,10 @@ fun ForumBodyContent() {
     }
 }
 
-/*
+
 @Preview(showBackground = true)
 @Composable
 fun ForumPreview() {
-    ForumScreen()
+    val navController = rememberNavController()
+    ForumScreen(navController)
 }
-*/

@@ -4,12 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.buildconnectapp.screens.AdvertisementsScreen
 import com.example.buildconnectapp.screens.CalendarScreen
 import com.example.buildconnectapp.screens.ForumScreen
 import com.example.buildconnectapp.screens.LoginScreen
 import com.example.buildconnectapp.screens.MenuScreen
 import com.example.buildconnectapp.screens.SignUpScreen
+import com.example.buildconnectapp.screens.UserFormScreen
+import com.example.buildconnectapp.screens.UserListScreen
 
 @Composable
 fun AppNavigation(){
@@ -33,5 +36,13 @@ fun AppNavigation(){
         composable(route = AppScreens.ForumScreen.route){
             ForumScreen(navController)
         }
+        composable(route = AppScreens.UserListScreen.route){
+            UserListScreen(navController)
+        }
+        composable(route = AppScreens.UserFormScreen.route, arguments = listOf(navArgument("userId") { defaultValue = "" })) { backStackEntry ->
+            val userId = backStackEntry.arguments?.getString("userId") ?: ""
+            UserFormScreen(navController, userId)
+        }
+
     }
 }

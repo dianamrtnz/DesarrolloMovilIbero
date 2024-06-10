@@ -27,11 +27,13 @@ import androidx.compose.ui.unit.dp
 import com.example.buildconnectapp.navigation.AppNavigation
 import com.example.buildconnectapp.ui.theme.BuildConnectAppTheme
 import com.example.buildconnectapp.screens.LoginScreen
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        FirebaseApp.initializeApp(this)
         setContent {
             BuildConnectAppTheme {
                 AppNavigation()
@@ -40,10 +42,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     BuildConnectAppTheme {
         AppNavigation()
     }
 }
+ */

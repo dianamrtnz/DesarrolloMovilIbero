@@ -1,5 +1,6 @@
 package com.example.buildconnectapp.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,21 +25,35 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.buildconnectapp.helper.PreferencesHelper
+import com.example.buildconnectapp.model.Usuario
 import com.example.buildconnectapp.navigation.AppScreens
 import com.example.buildconnectapp.ui.theme.BuildConnectAppTheme
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 @Composable
 fun LoginScreen(navController : NavController) {
+    val database = FirebaseDatabase.getInstance()
+    val userRef = database.getReference("usuario")
     var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isLoggedIn by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+    val preferencesHelper = PreferencesHelper(context)
 
     if (isLoggedIn) {
         Text(text = "Bienvenido, $username!", style = MaterialTheme.typography.titleMedium)
@@ -65,9 +80,9 @@ fun LoginScreen(navController : NavController) {
             }
             Spacer(modifier = Modifier.height(100.dp))
             TextField(
-                value = username,
-                onValueChange = { username = it },
-                label = { Text("Usuario") },
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Correo") },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 singleLine = true,
                 colors = TextFieldDefaults.colors(
@@ -105,6 +120,43 @@ fun LoginScreen(navController : NavController) {
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
+                    userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            var loginSuccessful = false
+                            for (userSnapshot in snapshot.children) {
+                                val map = userSnapshot.getValue()
+                                if (map != null && map != "") {
+                                    val user = userSnapshot.getValue(Usuario::class.java)
+                                    if (user != null && user.correo_electronico == email && user.contraseña == password) {
+                                        username = user.nombre
+                                        preferencesHelper.saveUserName(username)
+                                        loginSuccessful = true
+                                        isLoggedIn = true
+                                        errorMessage = ""
+                                        navController.navigate(route = AppScreens.MenuScreen.route)
+                                        break
+                                    }
+                                }
+                            }
+                            if (!loginSuccessful) {
+                                Toast.makeText(
+                                    navController.context,
+                                    "Usuario o contraseña incorrectos",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(
+                                navController.context,
+                                "Error: ${error.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
+                },
+                /*onClick = {
                     if (username == "user" && password == "123456") {
                         isLoggedIn = true
                         errorMessage = ""
@@ -112,7 +164,7 @@ fun LoginScreen(navController : NavController) {
                     } else {
                         errorMessage = "Usuario o contraseña incorrectos"
                     }
-                },
+                },*/
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF006557),
@@ -143,10 +195,10 @@ fun LoginScreen(navController : NavController) {
     }
 }
 
-/*
+
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
-    LoginScreen()
+    val navController = rememberNavController()
+    LoginScreen(navController)
 }
- */

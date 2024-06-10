@@ -1,0 +1,21 @@
+
+u
+Eapp/src/main/java/com/example/buildconnectapp/screens/SignUpScreen.kt,a\a\aa602e8472b515a0993fcf3689ce618e67776db6
+y
+Iapp/src/main/java/com/example/buildconnectapp/navigation/AppNavigation.kt,1\e\1ec0fd8109e2d5d59e0279f6a921ee3034193743
+v
+Fapp/src/main/java/com/example/buildconnectapp/navigation/AppScreens.kt,b\7\b747e456f85734348788201330b40f5a1520b229
+}
+Mapp/src/main/java/com/example/buildconnectapp/screens/AdvertisementsScreen.kt,a\b\abf52a31359ff3d5a53792c573b2fe35d61d91a8
+w
+Gapp/src/main/java/com/example/buildconnectapp/screens/CalendarScreen.kt,3\c\3cbe817c47870de612d6a50305632db95dbdfd56
+t
+Dapp/src/main/java/com/example/buildconnectapp/screens/ForumScreen.kt,f\0\f05e355b64384c58380a5faee8ba3624eaabd73c
+s
+Capp/src/main/java/com/example/buildconnectapp/screens/MenuScreen.kt,3\0\30d964a5116ca5df9b86c1fe94a30c368c5424bd
+t
+Dapp/src/main/java/com/example/buildconnectapp/screens/LoginScreen.kt,4\7\47897f4fc7bfee852f82dc7269e6a5e615903e60
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+D
+app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
